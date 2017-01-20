@@ -1,0 +1,29 @@
+{
+  "cron" : {
+    "calendar" :   { 
+      "name"       : "calendar",
+      "description": "Vérification toutes les 5 minutes",
+      "time"       : "0 */5 * * * *"
+    }
+  },
+  
+  "modules" : { 
+    "calendar" :   {
+      "description": "Plugin Calendar pour google",
+      "version"    : "1.0",
+
+      "calendars" : {
+      },
+
+      "calendar_id"            : "",
+      "calendar_secret"        : "",
+      "calendar_clientid"      : "",
+      "calendar_redirect_uris" : "",
+
+      "calendar_access_token"  : "",
+      "calendar_token_type"    : "",
+      "calendar_refresh_token" : "",
+      "calendar_expiry_date"   : ""
+    }
+  }
+}

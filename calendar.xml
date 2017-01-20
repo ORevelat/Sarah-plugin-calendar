@@ -1,0 +1,33 @@
+<grammar version="1.0" xml:lang="fr-FR" mode="voice" root="ruleCALENDAR" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+
+	<rule id="ruleCALENDAR" scope="public">
+    	<tag>out.action=new Object();</tag>
+
+	    <item>Sarah s'il te plait</item>
+
+		<item>
+			<ruleref uri="#CALENDAR" />
+			<tag>out.action.mode = "CALENDAR"; out.action.check = rules.CALENDAR.check</tag>
+		</item>
+
+	    <tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/calendar";</tag>
+	</rule>
+
+	<rule id="CALENDAR" scope="public">
+	    <tag>out.check="next";</tag>
+
+	    <one-of>
+	      <item>qu'est ce qui est prévu</item>
+	      <item>quelle est le planning</item>
+	      <item>donne moi le planning</item>
+	    </one-of>
+
+	    <item repeat="0-1">
+		    <one-of>
+		      <item>aujourd'hui <tag>out.check="today";</tag></item>
+		      <item>demain <tag>out.check="tomorrow";</tag></item>
+		    </one-of>
+	    </item>
+	</rule>
+
+</grammar>
