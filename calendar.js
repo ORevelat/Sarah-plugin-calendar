@@ -106,6 +106,15 @@ var actionPlanning = function (data, next) {
 					tts +=  horodatage + event.summary + '.       ';
 			});
 
+			if (tts.length == 0 && data.check) {
+				if (data.check == 'next')
+					tts = 'rien dans l\'imédiat';
+				else if (data.check == 'today')
+					tts = 'rien de prévu pour le moment';
+				else if (data.check == 'tomorrow')
+					tts = 'le planning de demain est vide pour me moment';
+			}
+
 			next({ "events": events, "tts": tts });
 		});
 
