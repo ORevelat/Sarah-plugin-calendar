@@ -108,7 +108,7 @@ var actionPlanning = function (data, next) {
 
 			if (tts.length == 0 && data.check) {
 				if (data.check == 'next')
-					tts = 'rien dans l\'imédiat';
+					tts = 'rien dans l\'immédiat';
 				else if (data.check == 'today')
 					tts = 'rien de prévu pour le moment';
 				else if (data.check == 'tomorrow')
