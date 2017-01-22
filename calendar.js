@@ -45,6 +45,13 @@ var commandError = function(next) {
 var actionCalendar = function (data, next) {
 	console.log('\x1b[91mmode=CALENDAR \x1b[0m');
 
+	if (data.cmd == "PLANNING")
+		return actionPlanning(data, next);
+	else if (data.cmd == "WEEK")
+		return actionWeek(data, next);
+};
+
+var actionPlanning = function (data, next) {
 	var pluginProps = Config.modules.calendar;
 
 	authorize(function(auth) { 
@@ -87,15 +94,16 @@ var actionCalendar = function (data, next) {
 				var horodatage = '';
 				if (event.start.date) {
 					var begin = new moment(event.start.date, rfc_3339_date);
-					horodatage = toDay(begin.day()) + ': ';
+					horodatage = toDay(begin.day()) + ' : ';
 				}
 				else {
 					var begin = new moment(event.start.dateTime, rfc_3339);
-					horodatage = 'à ' + begin.format("HH") + ' heure ' + begin.format("mm") + ': ';
+					var minutes = begin.format("mm");
+					horodatage = 'à ' + begin.format("HH") + ' heure ' + ((minutes != '00') ? minutes : '') + ': ';
 				}
 
 				if (event.summary)
-					tts +=  horodatage + event.summary + '. ';
+					tts +=  horodatage + event.summary + '.       ';
 			});
 
 			next({ "events": events, "tts": tts });
@@ -104,10 +112,41 @@ var actionCalendar = function (data, next) {
 	});
 };
 
+var actionWeek = function (data, next) {
+	var pluginProps = Config.modules.calendar;
+
+	var weeknumber = weekNumber();
+	var tts = 'nous sommes ';
+	if (data.check == 'tomorrow') {
+		weeknumber += 1;
+		tts = 'nous serons ';
+	}
+
+	tts = tts + ' en semaine ' + weeknumber + ' ( semaine ' + ((weeknumber%2 == 0) ? 'A' : 'B') + ' pour théa )';
+
+	next({'tts': tts });
+};
+
 function toDay(day) {
 	var days = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
 	return days[day];
-}
+};
+
+function weekNumber() {
+	var date = new Date();
+	date.setHours(0, 0, 0, 0);
+  
+  	// Thursday in current week decides the year.
+  	date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  
+	// January 4 is always in week 1.
+	var week1 = new Date(date.getFullYear(), 0, 4);
+
+	// Adjust to Thursday in week 1 and count number of weeks from date to week1.
+	return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+};
+
+// GOOGLE API specific
 
 var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
