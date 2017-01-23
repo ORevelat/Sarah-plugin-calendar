@@ -21,7 +21,7 @@ exports.dispose  = function() {
 };
 
 exports.cron = function(next){
-  actionCalendar({}, next);
+  actionPlanning({}, next);
 }
 
 exports.action = function(data, next) {
