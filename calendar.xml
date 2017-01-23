@@ -14,16 +14,10 @@
 	</rule>
 
 	<rule id="CALENDAR" scope="public">
-		<one-of>
-			<item>
-				<ruleref uri="#CALENDAR_PLANNING"/>
-				<tag>out.cmd=rules.CALENDAR_PLANNING.cmd; out.check=rules.CALENDAR_PLANNING.check;</tag>
-			</item>
-			<item>
-				<ruleref uri="#CALENDAR_WEEK"/>
-				<tag>out.cmd=rules.CALENDAR_WEEK.cmd; out.check=rules.CALENDAR_WEEK.check;</tag>
-			</item>
-		</one-of>
+		<item>
+			<ruleref uri="#CALENDAR_PLANNING"/>
+			<tag>out.cmd=rules.CALENDAR_PLANNING.cmd; out.check=rules.CALENDAR_PLANNING.check;</tag>
+		</item>
 	</rule>
 
 	<rule id="CALENDAR_PLANNING" scope="public">
@@ -44,14 +38,4 @@
 	    </item>
 	</rule>
 
-	<rule id="CALENDAR_WEEK" scope="public">
-	    <tag>out.cmd="WEEK";</tag>
-
-		<one-of>
-	    	<item>en qu'elle semaine sommes nous</item>
-	    	<item>nous sommes en qu'elle semaine</item>
-	    	<item>demain en qu'elle semaine serons nous <tag>out.check="tomorrow";</tag></item>
-	    	<item>demain nous serons en qu'elle semaine <tag>out.check="tomorrow";</tag></item>
-	    </one-of>
-	</rule>
 </grammar>
